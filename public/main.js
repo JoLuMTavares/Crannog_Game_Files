@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     $("#about").click(() => {
         $.ajax({
-            url      : 'about.json',
+            url      : 'http://localhost:3000/about',
             type     : 'GET',
             dataType : 'JSON',
             contentType: 'application/json; charset=utf-8',
