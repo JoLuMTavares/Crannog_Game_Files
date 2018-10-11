@@ -23,4 +23,8 @@ $(document).ready(function () {
         });
     });
 
+    $(".get-cards").click(() => {
+        
+    });
+
 });

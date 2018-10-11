@@ -19,8 +19,31 @@
     <button type="submit" id="about">About</button>
     <br>
     <br>
-    <textarea class="about-info" name="about-info" id="aboutInfo" cols="60" rows="10" style="display: none"></textarea>
+    <div class="about-info" name="about-info" id="aboutInfo" style="display: none"></div>
 
-  
+    <button type="submit" id="cards">Cards</button>
+    <br>
+    <br>
+    <form action="/cards" id="invetory">
+        <label for="cardType">Type of Card</label>
+        <select name="card-type" id="cardType">
+            <option value="rock">Rock</option>
+            <option value="scissor">Scissor</option>
+            <option value="paper">Paper</option>
+        </select>
+        <label for="cardLevel">Level of Card</label>
+        <select name="card-level" id="cardLevel">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+        <br>
+        <br>
+        <button class="get-Cards" type="submit">Get</button>
+        <button class="cancel" type="submit">Back</button>
+    </form>
+    <br>
+    <br>
+    <div id="currCards" class="curr-cards" style="display: none"></div>
 </body>
 </html>
