@@ -24,7 +24,7 @@
     <button type="submit" id="cards">Cards</button>
     <br>
     <br>
-    <form action="/cards" id="invetory">
+    <form action="" id="invetory">
         <label for="cardType">Type of Card</label>
         <select name="card-type" id="cardType">
             <option value="rock">Rock</option>
@@ -39,11 +39,31 @@
         </select>
         <br>
         <br>
-        <button class="get-Cards" type="submit">Get</button>
+        <button class="get-cards" type="submit">Get</button>
         <button class="cancel" type="submit">Back</button>
     </form>
     <br>
     <br>
-    <div id="currCards" class="curr-cards" style="display: none"></div>
+    <div class="col-sm-10 equipCardDiv hidden">
+
+        <div class="row">
+            <div class="col-sm-6" id="equiped">Equiped</div>
+
+            <div class="col-sm-6 carousel slide" id="carousel-card-choose">
+                <div class="carousel-inner">
+                    <!-- <div class="item active" id="firstCard">
+                        <img class="d-block w-100" src="images/s_001.png" alt="First slide">
+                    </div>
+                    <div class="item" id="secondCard">
+                        <img class="d-block w-100" src="images/p_001.png" alt="Second slide">
+                    </div>
+                    <div class="item" id="thirdCard">
+                        <img class="d-block w-100" src="images/r_001.png" alt="Third slide">
+                    </div> -->
+                </div>
+            </div>
+
+        </div>
+    </div>
 </body>
 </html>

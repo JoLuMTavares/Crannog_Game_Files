@@ -50,7 +50,7 @@ app.get("/about", function (req, res) {
 
 app.get("/cards", function (req, res) {
     
-    if (!req.query.level || req.query.type) {
+    if (!req.query.level || !req.query.level) {
         fs.readFile(__dirname + "/cards.json", function (err, data) {
 
             if (err) 
@@ -82,7 +82,7 @@ app.get("/cards", function (req, res) {
                 
                 let card = currCards[index];
 
-                if(card.level = req.query.level) {
+                if((card.type == req.query.type) && (card.level == req.query.level)) {
                     found = true;
                     cards.push(card);         
                 }
