@@ -121,7 +121,7 @@ h1 {
     top: 20%;
 }
 
-#btn-left:hover, #card-btn-left:hover, #btn-right:hover, #card-btn-right:hover, .card:hover {
+#btn-left:hover, #card-btn-left:hover, #btn-right:hover, #card-btn-right:hover, .card-image:hover {
     cursor: pointer;
 }
 

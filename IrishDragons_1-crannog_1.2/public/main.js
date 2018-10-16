@@ -18,12 +18,162 @@ $(document).ready(function () {
             
             
             // Moving to the next available card
-            $("#carousel-card-choose").carousel('next');
+            // $("#carousel-card-choose").carousel('next');
             // If everything works, the tag is removed.
-            $("#"+id).remove();
+            // $("#"+id).remove();
 
+            $(".carousel-inner").remove();
+
+            // Reloading the list of available cards
+            showListOfCards(cards);
         }
     });
+
+//  This function uploads the list of available cards
+function showListOfCards(cards) {
+
+    // Creating the carousel div
+    let carouselDiv = document.createElement("div");
+
+    // Giving the class name
+    carouselDiv.className = "carousel-inner";
+
+    // If the array has more than one element, only the first is active
+    if (cards.length > 1) {
+        for (var i = 0; i < cards.length; i++) {
+
+
+            let cardDiv = document.createElement('div');
+
+            // Class name of the div. Only the first one is active at the beggining
+            if (i === 0)
+                cardDiv.className = 'item active';
+            else
+                cardDiv.className = 'item';
+
+            let n = i+1;
+
+            // Setting the data-id of the card as data id for future use
+            cardDiv.setAttribute("data-id", cards[i].id);
+
+            // Setting the id of the card
+            cardDiv.setAttribute("id", "card-"+n);
+
+            // creating now an image tag
+            let imageTag = document.createElement('img');
+
+            // Setting the class data
+            imageTag.setAttribute("class", "d-block w-100 card-image");
+
+            // Setting the source of the image
+            imageTag.setAttribute("src", cards[i].image);
+
+            // Setting the title
+            imageTag.setAttribute("title", cards[i].name);
+
+            // Setting the id of the card as data id for future use
+            imageTag.setAttribute("data-id", cards[i].id);
+
+            // Appending the image to this card Div
+            cardDiv.append(imageTag);
+
+            // Appending the card Div to the carousel Div
+            carouselDiv.append(cardDiv);
+        }
+    } else {
+        let cardDiv = document.createElement('div');
+
+        // Class name of the div. 
+        cardDiv.className = 'item active';
+
+        // Setting the id of the card as data id for future use
+        cardDiv.setAttribute("data-id", cards[i].id);
+
+        // creating now an image tag
+        let imageTag = document.createElement('img');
+
+        // Setting the class data
+        imageTag.setAttribute("class", "d-block w-100 card-image");
+
+        // Setting the source of the image
+        imageTag.setAttribute("src", cards[i].image);
+
+        // Setting the title
+        imageTag.setAttribute("title", cards[i].name);
+
+        // Setting the id of the card as data id for future use
+        imageTag.setAttribute("data-id", cards[i].id);
+
+        // Appending the image to this card Div
+        cardDiv.append(imageTag);
+
+        // Appending the card Div to the carousel Div
+        carouselDiv.append(cardDiv);
+    }
+    // Appending the carousel Div to the slide Div
+    $("#carousel-card-choose").append(carouselDiv);
+}
+
+// This function sets the card on one of the slots (attack or defense)
+function setCard(id) {
+
+    for (let i = 0; i < cards.length; i++) {
+        if (cards[i].id === id) {
+            let cardDiv = document.createElement('div');
+
+            // Class name of the div. Only the first one is active at the beggining
+            if (i === 0)
+                cardDiv.className = 'item active';
+            else
+                cardDiv.className = 'item';
+
+            // Setting the id of the card as data id for future use
+            cardDiv.setAttribute("data-id", cards[i].id);
+
+            // creating now an image tag
+            let imageTag = document.createElement('img');
+
+            // Setting the class data
+            imageTag.setAttribute("class", "d-block w-100 equip-card");
+
+            // Setting the source of the image
+            imageTag.setAttribute("src", cards[i].image);
+
+            // Setting the title
+            imageTag.setAttribute("title", cards[i].name);
+
+            // Appending the image to this card Div
+            cardDiv.append(imageTag);
+            
+            // Appending the item to the attack card
+            $(".attackCard").append(cardDiv); 
+
+            // Removing the card from the list of cards
+            cards.pop(cards[i]);
+        }
+    }
+}
+
+// This function removes the card from one of the weapon cards
+// and puts it back to the array of available cards
+function removeCard(id) {
+    let data_id = $("data-id").val();
+    let card_name = $("title").val();
+    let image = $("src").val();
+
+    var newCard = {
+        id      : data_id,
+        name    : card_name,
+        image   : image
+    }
+
+    // Putting the card on the array
+    cards.push(newCard);
+
+    // Removing the card tag from the the corresponding div
+    $("").remove();
+
+}
 
     $("#about").click(() => {
 
@@ -51,13 +201,10 @@ $(document).ready(function () {
     });
 
     $(".get-cards").click(() => {
-        let cardType = $("#cardType").val();
-        let cardLevel = $("#cardLevel").val();
+        let cardType = $("#cardType").val();    // Getting the card type
+        let cardLevel = $("#cardLevel").val();  // Getting the card level
 
-        var params = {
-            type: cardType,
-            level: cardLevel
-        };
+       
 
         // After getting the options, this is sent to the server as parameters
         $.ajax({
@@ -85,72 +232,11 @@ $(document).ready(function () {
                     });
 
                     $("#invetory").fadeOut();
-                    // $("#firstCard")
-                    // $(".equipCardDiv").fadeIn();
 
+                    // Uploading the list of cards
+                    showListOfCards(cards);
 
-                    if (cards.length > 1) {
-                        for (var i = 0; i < cards.length; i++) {
-
-                            let cardDiv = document.createElement('div');
-
-                            // Class name of the div. Only the first one is active at the beggining
-                            if (i === 0)
-                                cardDiv.className = 'item active';
-                            else
-                                cardDiv.className = 'item';
-
-                            // Setting the id of the card as data id for future use
-                            cardDiv.setAttribute("data-id", cards[i].id);
-
-                            // creating now an image tag
-                            let imageTag = document.createElement('img');
-
-                            // Setting the class data
-                            imageTag.setAttribute("class", "d-block w-100");
-
-                            // Setting the source of the image
-                            imageTag.setAttribute("src", cards[i].image);
-
-                            // Setting the title
-                            imageTag.setAttribute("title", cards[i].name);
-
-                            // Appending the image to this card Div
-                            cardDiv.append(imageTag);
-
-                            // Appending the Div to the carousel Div
-                            $(".carousel-inner").append(cardDiv);
-                        }
-                    } else {
-                        let cardDiv = document.createElement('div');
-
-                        // Class name of the div. 
-                        cardDiv.className = 'item active';
-
-                        // Setting the id of the card as data id for future use
-                        // cardDiv.setAttribute("data-id", cards[i].id);
-
-                        // creating now an image tag
-                        let imageTag = document.createElement('img');
-
-                        // Setting the class data
-                        imageTag.setAttribute("class", "d-block w-100");
-
-                        // Setting the source of the image
-                        imageTag.setAttribute("src", cards[i].image);
-
-                        // Setting the title
-                        imageTag.setAttribute("title", cards[i].name);
-
-                        // Setting the id of the card as data id for future use
-                        imageTag.setAttribute("data-id", cards[i].id);
-
-                        // Appending the image to this card Div
-                        cardDiv.append(imageTag);
-
-                        // Appending the Div to the carousel Div
-                        $(".carousel-inner").append(cardDiv);
-                    }
+                    
                 }
             }
         });
@@ -170,60 +256,28 @@ $(document).ready(function () {
                 cards = []; 
                 data.forEach(card => {
                     cards.push(card);
-
                 });
-                for (var i = 0; i < cards.length; i++) {
 
-                    let cardDiv = document.createElement('div');
+                // This div will be hidden and the other bellow shown
+                $('.gamediv2').fadeOut().queue(function () {
 
-                    let n = i + 1; // Just for the id of each tag
+                    $('.equipCardDiv').removeClass("hidden").dequeue();
+                });
 
-                    // Class name of the div. Only the first one is active at the beggining
-                    if (i === 0)
-                        cardDiv.className = 'item active card';
-                    else
-                        cardDiv.className = 'item card';
 
-                    // Setting the id of the tag
-                    cardDiv.setAttribute("id", "card-"+n);
-
-                    // Setting the id of the card as data id for future use
-                    // cardDiv.setAttribute("data-id", cards[i].id);
-
-                    // Setting the function to be called
-                    // cardDiv.setAttribute("onclick", "setCard()");
-
-                    // creating now an image tag
-                    let imageTag = document.createElement('img');
-
-                    // Setting the class data
-                    imageTag.setAttribute("class", "d-block w-100 card-image");
-
-                    // Setting the source of the image
-                    imageTag.setAttribute("src", cards[i].image);
-
-                    // Setting the title
-                    imageTag.setAttribute("title", cards[i].name);
-
-                    // Setting the id of the card as data id for the image tag
-                    imageTag.setAttribute("data-id", cards[i].id);
-
-                    // Appending the image to this card Div
-                    cardDiv.append(imageTag);
-
-                    // Appending the Div to the carousel Div
-                    $(".carousel-inner").append(cardDiv);
-                }
+                // Uploading the list of cards
+                showListOfCards(cards);
 
             }
 
         });
 
-        // This div will be hidden and the other bellow shown
-        $('.gamediv2').fadeOut().queue(function () {
+        
+        // Disabling the button that called all of this
+        $("#btnEquipCards").attr("disabled", true);
+        $("#btnEquipCards").fadeOut();
 
-            $('.equipCardDiv').removeClass("hidden").dequeue();
-        });
+        event.preventDefault(); //do not run the default action
 
     });
 
@@ -272,44 +326,5 @@ $(document).ready(function () {
 
    */
 
-function setCard(id) {
-    // attackCard = $('data-id').val();
-
-        for (let i = 0; i < cards.length; i++) {
-            if (cards[i].id === id) {
-                let cardDiv = document.createElement('div');
-
-                // Class name of the div. Only the first one is active at the beggining
-                if (i === 0)
-                    cardDiv.className = 'item active';
-                else
-                    cardDiv.className = 'item';
-
-                // Setting the id of the card as data id for future use
-                cardDiv.setAttribute("data-id", cards[i].id);
-
-                // creating now an image tag
-                let imageTag = document.createElement('img');
-
-                // Setting the class data
-                imageTag.setAttribute("class", "d-block w-100 equip-card");
-
-                // Setting the source of the image
-                imageTag.setAttribute("src", cards[i].image);
-
-                // Setting the title
-                imageTag.setAttribute("title", cards[i].name);
-
-                // Appending the image to this card Div
-                cardDiv.append(imageTag);
-                
-                // Appending the item to the attack card
-                $(".attackCard").append(cardDiv); 
-
-                // Removing the card from the list of cards
-                cards.pop(cards[i]);
-            }
-        }
-}
 
 });
